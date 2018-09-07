@@ -50,4 +50,13 @@ class Expense < ApplicationRecord
     where("exp_date <= ? AND exp_date >= ?", month_ending, month_beginning)
   end
 
+  def self.sum_by_category(category_id)
+    where("category_id =?", category_id).group("category_id").sum("exp_amount").values[0]
+  end
+
+  def self.category_with_most_expenses
+    #returns hash of category id with sum of expenses
+    group("category_id").sum("exp_amount").max_by{|k,v| v}
+  end
+
 end
