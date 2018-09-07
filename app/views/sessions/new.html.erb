@@ -1,0 +1,13 @@
+<h1>Login!</h1>
+
+<div class="warning">
+  <h3><%=alert%></h3>
+</div>
+
+<%=form_tag('/login') do%>
+  <%=label_tag :username%>:
+  <%=text_field_tag :username%><br><br>
+  <%=label_tag :password%>:
+  <%=password_field_tag :password%><br><br>
+  <%=submit_tag "Login", class: "big_button"%>
+<%end%>
