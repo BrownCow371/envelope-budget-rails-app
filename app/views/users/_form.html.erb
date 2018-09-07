@@ -1,0 +1,30 @@
+<h3 class="warning">
+  <%if user.errors.any?%>
+  <ul>
+    <%user.errors.full_messages.each do |mess|%>
+    <li><%=mess%></li>
+      <%end%>
+  </ul>
+  <%end%>
+
+</h3>
+
+<%=form_for user do |f|%>
+
+  <strong><%=f.label :name%></strong>
+  <%=f.text_field :name%><br><br>
+
+  <strong><%=f.label :username%></strong>
+  <%=f.text_field :username%><br><br>
+
+  <strong><%=f.label :email%></strong>
+  <%=f.text_field :email%><br><br>
+
+  <strong><%=f.label :password%></strong>
+  <%=f.password_field :password%><br><br>
+
+  <strong><%=f.label :password_confirmation%></strong>
+  <%=f.password_field :password_confirmation%><br><br>
+
+  <%=f.submit :class => 'big_button'%>
+<%end%>
