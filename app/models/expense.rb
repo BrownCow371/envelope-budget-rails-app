@@ -19,6 +19,15 @@ class Expense < ApplicationRecord
      end
   end
 
+  def category_name=(name)
+    self.category = Category.find_by(name: name)
+    self.save
+  end
+
+  def category_name
+    self.category ? self.category.name : nil
+  end
+
   def self.by_user(user_id)
     where(user: user_id)
   end
