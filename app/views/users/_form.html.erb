@@ -2,7 +2,7 @@
   <%if user.errors.any?%>
   <ul>
     <%user.errors.full_messages.each do |mess|%>
-    <li><%=mess%></li>
+    <li class="warning"><strong><%=mess%></strong></li>
       <%end%>
   </ul>
   <%end%>
