@@ -4,6 +4,8 @@ class Expense < ApplicationRecord
 
   validates :exp_amount, presence: true
   validates :exp_amount, numericality: true
+
+  validates :payee, presence: true
   validate :exp_date_valid
 
   def exp_date_valid
@@ -20,7 +22,7 @@ class Expense < ApplicationRecord
   end
 
   def category_name=(name)
-    self.category = Category.find_by(name: name)
+    self.category = Category.find_or_create_by(name: name)
     self.save
   end
 
