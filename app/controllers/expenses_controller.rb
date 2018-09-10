@@ -46,6 +46,7 @@ class ExpensesController < ApplicationController
   end
 
   def update
+    # raise params.inspect
     if user_valid? && @expense.user_id == @user.id
       if @expense.update(expense_params)
         redirect_to user_expenses_path(@user)
@@ -74,8 +75,8 @@ private
 
   def set_user_by_params
     @user = User.find_by_id(params[:user_id]) if (params[:user_id] && current_user.id == params[:user_id].to_i)
-    if @user.nil? ||
-      redirect_to user_path(current_user), alert: "You are not allowed to view the accounts of other users. Redirected to your account."
+    if @user.nil?
+      redirect_to user_path(current_user), alert: "User not found or you are not allowed to view the accounts of other users. Redirected to your account."
     end
   end
 
@@ -84,7 +85,7 @@ private
   end
 
   def expense_params
-    params.require(:expense).permit(:payee, :exp_date, :exp_amount, :category_name)
+    params.require(:expense).permit(:payee, :exp_date, :exp_amount, :category_name, category_new: [:name])
   end
 
 
