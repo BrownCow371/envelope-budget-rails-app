@@ -31,7 +31,7 @@ class Expense < ApplicationRecord
   end
 
   def category_new=(new_category)
-    empty = new_category[:name].nil? || new_category[:name] == ""
+    empty = new_category[:name].nil? || new_category[:name].blank?
     if !empty
       category = Category.find_or_create_by(name: new_category[:name])
       self.category = category
@@ -43,7 +43,7 @@ class Expense < ApplicationRecord
   end
 
   def self.by_category(category_id)
-    where(category: category_id)
+    where(category: category_id).order("exp_date DESC")
   end
 
   def self.last_five
@@ -66,7 +66,7 @@ class Expense < ApplicationRecord
     month_number = Date.today.month
     month_beginning = Date.new(Date.today.year, month_number)
     month_ending = month_beginning.end_of_month
-    where("exp_date <= ? AND exp_date >= ?", month_ending, month_beginning)
+    where("exp_date <= ? AND exp_date >= ?", month_ending, month_beginning).order("exp_date DESC")
   end
 
   def self.sum_by_specific_category(category_id)
