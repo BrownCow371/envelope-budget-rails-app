@@ -30,6 +30,14 @@ class Expense < ApplicationRecord
     self.category ? self.category.name : nil
   end
 
+  def category_new=(new_category)
+    empty = new_category[:name].nil? || new_category[:name] == ""
+    if !empty
+      category = Category.find_or_create_by(name: new_category[:name])
+      self.category = category
+    end
+  end
+
   def self.by_user(user_id)
     where(user: user_id)
   end
