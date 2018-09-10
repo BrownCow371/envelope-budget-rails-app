@@ -18,6 +18,7 @@
       <%= yield %>
       <% if logged_in? %>
         <div class="footer_buttons">
+          <%=button_to "Your Account", user_path(current_user), :method => "get", :class => "big_button"%>
           <%=button_to "Edit Account", edit_user_path(current_user), :method => "get", :class => "big_button"%>
           <%=button_to "Go to Your Expenses", user_expenses_path(current_user), :method => "get", :class => "big_button"%>
           <%=button_to "New Expense", new_user_expense_path(current_user), :method => "get", :class => "big_button"%>
