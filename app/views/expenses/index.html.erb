@@ -2,14 +2,13 @@
 
 <table id="table">
   <tr>
-    <th>Date</th>
-    <th>Payee</th>
-    <th>Amount</th>
-    <th>Category</th>
+    <%=expense_detail_table_header%>
   </tr>
 
-<% @expenses.each do |expense| %>
-  <%=render partial: 'expense_table', locals: {user: @user, expense: expense}%>
-<%end%>
+  <% @expenses.each do |expense| %>
+    <tr>
+    <%=expense_detail_table_row(@user, expense)%>
+    </tr>
+  <%end%>
 
 </table>
