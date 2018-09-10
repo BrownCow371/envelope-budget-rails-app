@@ -4,9 +4,24 @@ class ExpensesController < ApplicationController
   before_action :set_user_by_params
 
   def index
-    # raise @user.inspect
     if user_valid?
-      @expenses = @user.expenses
+      if !params[:category].blank?
+        @expenses = @user.expenses.by_category(params[:category])
+        # flash[:message] = "#{Category.find_by_id(params[:category].to_i).name} Category Expenses"
+        flash[:message] = "#{@expenses.first.category.name} Category Expenses"
+
+      elsif !params[:date].blank?
+        if params[:date] == "Today"
+          @expenses = @user.expenses.from_today
+          flash[:message] = "Today's Expenses"
+        elsif params[:date] =="This Month"
+          @expenses = @user.expenses.from_this_month
+          flash[:message] = "This Month's Expenses"
+        end
+      else
+        @expenses = @user.expenses
+        flash.clear
+      end
     end
   end
 
