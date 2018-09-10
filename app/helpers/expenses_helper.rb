@@ -25,12 +25,4 @@ module ExpensesHelper
             ]
     data.collect { |column| content_tag(:td, column) }.join().html_safe
   end
-
-  def category_selection(f, expense)
-    if expense.category
-      f.select :category_name, options_from_collection_for_select(Category.all, "name", "name", :selected=>expense.category.name), include_blank: true
-    else
-      f.select :category_name, options_from_collection_for_select(Category.all, "name", "name"), include_blank: true
-    end
-  end
 end
