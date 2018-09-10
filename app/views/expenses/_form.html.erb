@@ -1,3 +1,11 @@
+<%if expense.errors.any?%>
+<ul>
+  <%expense.errors.full_messages.each do |mess|%>
+    <li class="warning"><strong><%=mess%></strong></li>
+  <%end%>
+</ul>
+<%end%>
+
 <%=form_for([user, expense]) do |f|%>
   <%=f.label :exp_date, "Date"%>
   <%=f.date_field :exp_date%><br><br>
@@ -6,10 +14,13 @@
   <%=f.text_field :payee%><br><br>
 
   <%=f.label :exp_amount, "Amount"%>
-  $<%=f.number_field :exp_amount%><br><br>
+  <%=f.number_field :exp_amount, class: "currency", step: :any %><br><br>
 
-  <%=f.label :category%>
-  <%=f.select :category, options_from_collection_for_select(Category.all, "id", "name", :selected=>expense.category_id), include_blank: true%><br><br>
+  <%=f.label :category_name, "Pick from and Exiting Category"%>
+  <%=category_selection(f, expense)%><br><br>
+
+  <%=f.label :category_name, "Or add a new Category"%>
+  <%=f.text_field :category_name%><br><br>
 
   <%=f.submit class: "big_button"%>
 <%end%>
