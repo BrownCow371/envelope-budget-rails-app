@@ -83,5 +83,7 @@ class Expense < ApplicationRecord
     group("category_id").sum("exp_amount").max_by{|k,v| v}
   end
 
-
+  def self.sum_total
+    self.sum("exp_amount")
+  end
 end
