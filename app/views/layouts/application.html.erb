@@ -12,10 +12,17 @@
   <body>
     <div class="wrapper">
       <% flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, class: warning %>
+        <%= content_tag :div, msg, class: "warning" %>
       <% end -%>
-        <%= yield %>
 
+      <%= yield %>
+      <% if logged_in? %>
+        <div class="footer_buttons">
+          <%=button_to "Edit Account", edit_user_path(current_user), :method => "get", :class => "big_button"%>
+          <%=button_to "Go to Your Expenses", user_expenses_path(current_user), :method => "get", :class => "big_button"%>
+          <%=button_to "Logout", {controller: 'sessions', action: 'destroy', method: 'post'}, :class => "big_button"%>
+        </div>
+      <%end%>
       <footer class="branding">
         <small>&copy; 2018 <strong>EnvelopeBudgetRailsApp</strong></small>
       </footer>
