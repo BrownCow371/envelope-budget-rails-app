@@ -12,7 +12,7 @@
   <body>
     <div class="wrapper">
       <% flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, class: "warning" %>
+        <strong><%= content_tag :div, msg, class: "warning" %></strong>
       <% end -%>
 
       <%= yield %>
@@ -20,6 +20,7 @@
         <div class="footer_buttons">
           <%=button_to "Edit Account", edit_user_path(current_user), :method => "get", :class => "big_button"%>
           <%=button_to "Go to Your Expenses", user_expenses_path(current_user), :method => "get", :class => "big_button"%>
+          <%=button_to "New Expense", new_user_expense_path(current_user), :method => "get", :class => "big_button"%>
           <%=button_to "Logout", {controller: 'sessions', action: 'destroy', method: 'post'}, :class => "big_button"%>
         </div>
       <%end%>
