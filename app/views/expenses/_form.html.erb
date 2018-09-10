@@ -1,0 +1,15 @@
+<%=form_for([user, expense]) do |f|%>
+  <%=f.label :exp_date, "Date"%>
+  <%=f.date_field :exp_date%><br><br>
+
+  <%=f.label :payee%>
+  <%=f.text_field :payee%><br><br>
+
+  <%=f.label :exp_amount, "Amount"%>
+  $<%=f.number_field :exp_amount%><br><br>
+
+  <%=f.label :category%>
+  <%=f.select :category, options_from_collection_for_select(Category.all, "id", "name", :selected=>expense.category_id), include_blank: true%><br><br>
+
+  <%=f.submit class: "big_button"%>
+<%end%>
