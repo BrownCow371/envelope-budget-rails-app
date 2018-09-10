@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_logged_in, only: [:show, :edit, :update, :destroy]
 
   def new
     @user=User.new
@@ -22,6 +23,12 @@ class UsersController < ApplicationController
   end
 
   def update
+    # raise params.inspect
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
 
   def destroy
