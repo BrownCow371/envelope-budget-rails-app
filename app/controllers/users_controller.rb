@@ -17,9 +17,15 @@ class UsersController < ApplicationController
   end
 
   def show
+    if @user.nil?
+      redirect_to user_path(current_user), alert: "User not found or you are not authorized to view this account. Redirected to your account."
+    end
   end
 
   def edit
+    if @user.nil?
+      redirect_to user_path(current_user), alert: "User not found or you are not authorized to edit this account. Redirected to your account."
+    end
   end
 
   def update
@@ -31,13 +37,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-  end
-
 private
 
   def set_user
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by_id(params[:id]) if params[:id].to_i == current_user.id
   end
 
   def user_params
