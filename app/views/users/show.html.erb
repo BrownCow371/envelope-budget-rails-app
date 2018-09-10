@@ -1,1 +1,21 @@
 <h1>Hello, <%=@user.name%>!</h1>
+
+<h2>Your Account Details:</h2>
+
+<table id=table>
+  <tr>
+    <th>Name</th>
+    <th>Username</th>
+    <th>email</th>
+  </tr>
+  <tr>
+    <td><%=@user.name%></td>
+    <td><%=@user.username%></td>
+    <td><%=@user.email%></td>
+  </tr>
+
+</table>
+
+<%=button_to "Edit Account", edit_user_path(@user), :method => "get", :class => "big_button"%>
+<%=button_to "Go to Your Expenses", user_expenses_path(@user), :method => "get", :class => "big_button"%>
+<%=button_to "Logout", {controller: 'sessions', action: 'destroy', method: 'post'}, :class => "big_button"%>
