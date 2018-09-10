@@ -17,10 +17,11 @@
   <%=f.number_field :exp_amount, class: "currency", step: :any %><br><br>
 
   <%=f.label :category_name, "Pick from and Exiting Category"%>
-  <%=category_selection(f, expense)%><br><br>
+  <%=f.collection_select :category_name, Category.all, :name, :name, include_blank: true%><br><br>
 
-  <%=f.label :category_name, "Or add a new Category"%>
-  <%=f.text_field :category_name%><br><br>
-
+  <%=f.fields_for :category_new, expense.build_category do |cat_field|%>
+    <%=cat_field.label :name, "Or create a new Category"%>
+    <%=cat_field.text_field :name%><br><br>
+  <%end%>
   <%=f.submit class: "big_button"%>
 <%end%>
