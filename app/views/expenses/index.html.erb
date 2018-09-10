@@ -1,0 +1,15 @@
+<h1>Expenses for <%=@user.name%></h1>
+
+<table id="table">
+  <tr>
+    <th>Date</th>
+    <th>Payee</th>
+    <th>Amount</th>
+    <th>Category</th>
+  </tr>
+
+<% @expenses.each do |expense| %>
+  <%=render partial: 'expense_table', locals: {user: @user, expense: expense}%>
+<%end%>
+
+</table>
