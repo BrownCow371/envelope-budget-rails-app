@@ -1,5 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :require_logged_in
+  before_action :set_expense, only: [:show, :edit, :update, :destroy]
 
   def index
     @user = User.find_by_id(params[:user_id]) if params[:user_id]
@@ -27,6 +28,20 @@ class ExpensesController < ApplicationController
   end
 
   def destroy
+    @expense.destroy
+    redirect_to user_expenses_path(@user), alert: "Expense removed from your list of expenses."
   end
+
+private
+
+  def set_expense
+    @expense = Expense.find_by_id(params[:id])
+    @user=@expense.user
+  end
+
+  def expense_params
+    params.require(:expense).permit(:payee, :exp_date, :exp_amount, :category_name)
+  end
+
 
 end
