@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+
+
   resources :users do
+    get '/expenses/stats' => 'expenses#stats', as: 'expenses_stats'
     resources :expenses
     resources :categories, only: [:show]
   end
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
   root to: "static#welcome"
 
   get '/auth/facebook/callback' => 'sessions#create'
+
 
   # users/1/expenses
   # users/1/expenses/4
