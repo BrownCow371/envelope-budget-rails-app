@@ -4,7 +4,7 @@
 
 <%=form_tag(user_expenses_path(@user), method: "get") do%>
   <%=label_tag :category%>
-  <%=select_tag :category, options_from_collection_for_select(@user.categories, :id, :name), include_blank: true%>
+  <%=select_tag :category, options_from_collection_for_select(@user.categories.uniq, :id, :name), include_blank: true%>
   <%=label_tag :date%>
   <%=select_tag :date, options_for_select(["Today", "This Month"]), include_blank: true%>
   <%=submit_tag "Filter"%>
