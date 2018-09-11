@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   root to: "static#welcome"
 
+  get '/auth/facebook/callback' => 'sessions#create'
+
   # users/1/expenses
   # users/1/expenses/4
 
