@@ -4,17 +4,17 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if auth_hash['uid']
-      raise params.inspect
-      @user = User.find_or_create_by(uid: auth['uid']) do |u|
+    if auth_hash
+      @user = User.find_or_create_by(uid: auth_hash['uid']) do |u|
         u.name= auth_hash['info']['name']
         u.email= auth_hash['info']['email']
+        # u.username= auth_hash['info']['username']
         u.password= SecureRandom.hex
       end
       session[:user_id] = @user.id
       redirect_to @user
     else
-      @user = User.find_by(username: params[:username])
+      @user = User.find_by(email: params[:email])
 
       if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
