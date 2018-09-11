@@ -21,15 +21,18 @@ class Expense < ApplicationRecord
      end
   end
 
+  #used in expense creation
   def category_name=(name)
     self.category = Category.find_or_create_by(name: name)
     self.save
   end
 
+
   def category_name
     self.category ? self.category.name : nil
   end
 
+  #used in expense creation form
   def category_new=(new_category)
     empty = new_category[:name].nil? || new_category[:name].blank?
     if !empty
@@ -38,35 +41,35 @@ class Expense < ApplicationRecord
     end
   end
 
-  def self.by_user(user_id)
-    where(user: user_id)
-  end
-
+  #filter expenses by category
   def self.by_category(category_id)
     where(category: category_id).order("exp_date DESC")
+  end
+
+  #filter expenses to just today's
+  def self.from_today
+    where("exp_date =?", Date.today)
+  end
+
+  #filter results to just this month's
+  def self.from_this_month
+    month_number = Date.today.month
+    month_beginning = Date.new(Date.today.year, month_number)
+    month_ending = month_beginning.end_of_month
+    where("exp_date <= ? AND exp_date >= ?", month_ending, month_beginning).order("exp_date DESC")
+  end
+
+  #sum all provided expenses
+  def self.sum_total
+    self.sum("exp_amount")
   end
 
   def self.last_five
     self.all.order("id DESC").limit(5)
   end
 
-  # def self.largest_by_user(user_id)
-  #   where(user: user_id).order("exp_amount DESC").limit(1)
-  # end
-
   def self.largest
     self.order("exp_amount DESC").limit(1)
-  end
-
-  def self.from_today
-    where("exp_date =?", Date.today)
-  end
-
-  def self.from_this_month
-    month_number = Date.today.month
-    month_beginning = Date.new(Date.today.year, month_number)
-    month_ending = month_beginning.end_of_month
-    where("exp_date <= ? AND exp_date >= ?", month_ending, month_beginning).order("exp_date DESC")
   end
 
   def self.sum_by_specific_category(category_id)
@@ -83,7 +86,4 @@ class Expense < ApplicationRecord
     group("category_id").sum("exp_amount").max_by{|k,v| v}
   end
 
-  def self.sum_total
-    self.sum("exp_amount")
-  end
 end
