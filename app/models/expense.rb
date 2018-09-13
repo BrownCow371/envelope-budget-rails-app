@@ -5,6 +5,8 @@ class Expense < ApplicationRecord
   validates :exp_amount, presence: true
   validates :exp_amount, numericality: true
 
+  validates :category_name, presence: true
+
   validates :payee, presence: true
   validate :exp_date_valid
 
