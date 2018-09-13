@@ -6,6 +6,10 @@ class ExpensesController < ApplicationController
   def stats
   end
 
+  def last_five
+    @expenses = @user.expenses.last_five
+  end
+
   def index
     filter_results
   end
@@ -98,7 +102,7 @@ private
     flash[:message] = ""
    end
  end
- 
+
   # coming soon
   # def stats_hash
   #   largest expense
