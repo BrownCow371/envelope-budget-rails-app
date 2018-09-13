@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :users do
     get '/expenses/stats' => 'expenses#stats', as: 'expenses_stats'
+    get '/expenses/last_five' => 'expenses#last_five', as: 'expenses_last_five'
     resources :expenses
     resources :categories, only: [:show]
   end
