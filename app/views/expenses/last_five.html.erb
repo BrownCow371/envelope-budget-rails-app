@@ -1,0 +1,16 @@
+<h1>Last Five</h1>
+
+<table id="table">
+  <tr>
+    <%=expense_detail_table_header%>
+  </tr>
+
+  <% @expenses.each do |expense| %>
+    <tr>
+    <%=expense_detail_table_row(@user, expense)%>
+    </tr>
+  <%end%>
+
+</table>
+
+<h2>Total Expenses: <%=number_to_currency(@expenses.sum_total)%></h2>
