@@ -67,7 +67,7 @@ class Expense < ApplicationRecord
   end
 
   def self.last_five
-    self.all.order("id DESC").limit(5)
+    self.all.order("exp_date DESC").limit(5)
   end
 
   def self.largest
