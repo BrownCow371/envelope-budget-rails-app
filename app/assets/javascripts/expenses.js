@@ -26,7 +26,12 @@ let attachListeners = () => {
     alert("You Clicked the Expenses Link!");
   })
 
-
+  //Listener for next expense on expense show page
+  $("#js-next-expense").on("click", function(event){
+    event.preventDefault();
+    //placeholder functionality
+    alert("You Clicked the Next Expense Link!");
+  })
 
 
 // 1) need to add a serializer for expenses
