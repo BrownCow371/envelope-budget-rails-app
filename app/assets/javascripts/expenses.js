@@ -9,15 +9,44 @@
         // need to show new expense right on New expense Form?
         // or does this need to be a new expense form on a category show page?
         // or do I need to modify my expenses index page to have a means of creating a new expense that then shows up dynamically in the list?
+// Constructor Function - Expense
+function Expense(attributes){
+  this.id = attributes.id;
+  this.user_id = attributes.user_id;
+  this.category_id = attributes.category_id;
+  this.exp_amount = attributes.exp_amount;
+  this.exp_date= attributes.exp_date;
+  this.payee = attributes.payee;
+}
+
+Expense.prototype.renderTable = function(){
+  return `<li>${this.payee}</li>`
+}
+
+function User(attributes){
+  this.id = attributes.id;
+  this.email = attributes.email;
+  this.username = attributes.username;
+  this.name = attributes.name;
+}
 
 let attachListeners = () => {
   // Listener for submit button for new expense
   $("form#new_expense").on("submit", function(event){
     event.preventDefault();
-    // placeholder functionilty
-    alert("You Clicked Submit!");
-    })
-  }
+    let new_form = $(this);
+    let action = new_form.attr("action");
+    let params = new_form.serialize();
+
+    $.post(action, params, function(json){
+      console.log("response data", json)
+      let expense = new Expense(json);
+      expenseRow = expense.renderTable()
+      $("div#js-temporary").append(expenseRow)
+    }, "json")
+
+  // end submit button listener
+  });
 
   //Listener for link on user show page
   $("#js-list-expenses").on("click", function(event){
@@ -32,6 +61,9 @@ let attachListeners = () => {
     //placeholder functionality
     alert("You Clicked the Next Expense Link!");
   })
+
+//end actionListener
+}
 
 
 // 1) need to add a serializer for expenses
