@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :require_logged_in
-  before_action :set_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_expense, only: [:show, :edit, :update, :destroy, :jsontest]
   before_action :set_user_by_params
 
   def stats
@@ -25,11 +25,15 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
   end
 
+  def jsontest
+    render :json => @expense
+  end
+
   def create
     @expense = @user.expenses.build(expense_params)
     if user_valid? && @expense.save
       respond_to do |f|
-        f.json {render :json =>@expense, alert: "Expense JSON added!"}
+        f.json {render :json => @expense, alert: "Expense JSON added!"}
         f.html {redirect_to user_expenses_path(@user), alert: "Expense added!"}
       end
     else
