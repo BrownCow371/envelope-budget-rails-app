@@ -11,6 +11,7 @@ class ExpensesController < ApplicationController
   end
 
   def index
+    # need to render User Expenses index page via JSON/JS
     filter_results
   end
 
