@@ -28,7 +28,10 @@ class ExpensesController < ApplicationController
   def create
     @expense = @user.expenses.build(expense_params)
     if user_valid? && @expense.save
-      redirect_to user_expenses_path(@user), alert: "Expense added!"
+      respond_to do |f|
+        f.json {render :json =>@expense, alert: "Expense JSON added!"}
+        f.html {redirect_to user_expenses_path(@user), alert: "Expense added!"}
+      end
     else
       render 'new'
     end
