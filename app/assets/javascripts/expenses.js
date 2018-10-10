@@ -20,8 +20,21 @@ function Expense(attributes){
 }
 
 Expense.prototype.renderTable = function(){
-  return `<li>${this.payee}</li>`
-}
+  return `<br><br><br>
+          <h3> New Expense Added:</h3>
+          <table id="expense_table">
+            <tbody><tr>
+              <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th>
+            </tr>
+            <tr>
+              <td>${this.exp_date}</td>
+              <td>${this.payee}</td>
+              <td>${this.exp_amount}</td>
+              <td>${this.category_id}</td>
+            </tr>
+          </tbody></table>`
+        }
+
 
 function User(attributes){
   this.id = attributes.id;
