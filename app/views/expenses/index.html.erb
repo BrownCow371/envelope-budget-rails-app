@@ -13,18 +13,8 @@
 <hr> </hr>
 <br><br>
 
-<table id="table">
-  <!--helper for creating table header data-->
-  <tr>
-    <%=expense_detail_table_header%>
-  </tr>
-  <!--iterate through expenses and use helper for creating table row data-->
-  <% @expenses.each do |expense| %>
-    <tr>
-    <%=expense_detail_table_row(@user, expense)%>
-    </tr>
-  <%end%>
-  <!--want to add a row here that acts like a form for creating a new Expense -->
-</table>
+<div class="">
+  <%=render partial: 'table', locals: {user: @user, expenses:@expenses}%>
+</div>
 
 <h2>Total Expenses: <%=number_to_currency(@expenses.sum_total)%></h2>
