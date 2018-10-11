@@ -26,7 +26,7 @@ class ExpensesController < ApplicationController
   end
 
   def jsontest
-    render :json => @expense
+    render :json => @user
   end
 
   def create
