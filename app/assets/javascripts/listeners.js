@@ -18,7 +18,7 @@
       let params = new_form.serialize();
 
       $.post(action, params, function(json){
-        console.log("response data", json)
+        // console.log("response data", json)
         let expense = new Expense(json);
         expenseRow = expense.renderTable()
         $("div#js-temporary").append(expenseRow)
@@ -30,15 +30,30 @@
     //Listener for link on user show page
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
-      //placeholder functionality
-      alert("You Clicked the Expenses Link!");
+
     })
 
     //Listener for next expense on expense show page
-    $("#js-next-expense").on("click", function(event){
-      event.preventDefault();
-      //placeholder functionality
-      alert("You Clicked the Next Expense Link!");
+    $("#js-next-expense").on("click", function(data){
+      data.preventDefault();
+      //need to find the next expense for THIS user. SO need an array of expense ids and to next thru indexes, not ids.
+      // so I need to get the user
+        let expenseId = parseInt($(this).attr("data-id"))
+      $.get(`/users/${$(this).attr("data-userId")}`, function(data){
+        let user = new User(data);
+        let userExpenses = user.expenses;
+        let arrayExpenseIds = userExpenses.map(expense => expense.id);
+        let index = arrayExpenseIds.indexOf(expenseId);
+        let nextExpenseId = arrayExpenseIds[++index];
+        let nextExpenseData = userExpenses.find(expense => expense.id === nextExpenseId)
+
+        let nextExpense = new Expense(nextExpenseData)
+
+        console.log(nextExpense)
+
+      })
+
+      // and then get the users expense ids.
     })
 
   //end actionListener
