@@ -17,8 +17,13 @@ class UsersController < ApplicationController
   end
 
   def show
+    respond_to do |f|
+      f.json {render :json => @user}
+    end
     if @user.nil?
-      redirect_to user_path(current_user), alert: "User not found or you are not authorized to view this account. Redirected to your account."
+      respond_to do |f|
+        f.html {redirect_to user_path(current_user), alert: "User not found or you are not authorized to view this account. Redirected to your account."}
+      end
     end
   end
 
