@@ -21,10 +21,4 @@ Rails.application.routes.draw do
 
   get '/auth/facebook/callback' => 'sessions#create'
 
-
-  # users/1/expenses
-  # users/1/expenses/4
-
-  # users/1/categories/2
-    # this might have a list of all expenses under that category...
 end
