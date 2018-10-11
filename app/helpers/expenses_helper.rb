@@ -15,7 +15,7 @@ module ExpensesHelper
 
 
   def expense_detail_table_row(user, expense)
-    data = [expense.exp_date,
+    row = [expense.exp_date,
               expense.payee,
               number_to_currency(expense.exp_amount),
               expense.category.name,
@@ -23,6 +23,6 @@ module ExpensesHelper
               (link_to "Edit Expense", edit_user_expense_path(user, expense)),
               (link_to "Remove Expense", user_expense_path(user, expense), method: :delete, data: { confirm: "Are you sure you want to remove this expense?" })
             ]
-    data.collect { |column| content_tag(:td, column) }.join().html_safe
+    row.collect { |table_field| content_tag(:td, table_field) }.join().html_safe
   end
 end

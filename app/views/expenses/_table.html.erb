@@ -5,7 +5,7 @@
   </tr>
   <!--iterate through expenses and use helper for creating table row data-->
   <% expenses.each do |expense| %>
-    <tr>
+    <tr class="expense_row">
     <%=expense_detail_table_row(user, expense)%>
     </tr>
   <%end%>
