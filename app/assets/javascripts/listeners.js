@@ -7,7 +7,26 @@
         // need to show new expense right on New expense Form?
         // or does this need to be a new expense form on a category show page?
         // or do I need to modify my expenses index page to have a means of creating a new expense that then shows up dynamically in the list?
+  let nextExpense = (data) => {
+    let expenseId = parseInt($("#js-next-expense").attr("data-id"))
+    let user = new User(data);
+    let userExpenses = user.expenses;
+    let arrayExpenseIds = userExpenses.map(expense => expense.id);
+    let index = arrayExpenseIds.indexOf(expenseId);
+    let nextExpenseId = arrayExpenseIds[++index];
 
+    if (index === arrayExpenseIds.length-1) {
+      nextExpenseId = arrayExpenseIds[0]
+    }
+
+    let nextExpenseData = userExpenses.find(expense => expense.id === nextExpenseId);
+    let nextExpense = new Expense(nextExpenseData);
+    let expenseRow = nextExpense.renderRow();
+    $(".expense_row").replaceWith(expenseRow)
+    $("#js-next-expense").attr("data-id", nextExpense.id)
+    console.log(expenseRow)
+    console.log(nextExpense.id)
+  }
 
   let attachListeners = () => {
     // Listener for submit button for new expense
@@ -20,7 +39,7 @@
       $.post(action, params, function(json){
         // console.log("response data", json)
         let expense = new Expense(json);
-        expenseRow = expense.renderTable()
+        let expenseRow = expense.renderTable()
         $("div#js-temporary").append(expenseRow)
       }, "json")
 
@@ -36,26 +55,12 @@
     //Listener for next expense on expense show page
     $("#js-next-expense").on("click", function(data){
       data.preventDefault();
-      //need to find the next expense for THIS user. SO need an array of expense ids and to next thru indexes, not ids.
-      // so I need to get the user
-        let expenseId = parseInt($(this).attr("data-id"))
       $.get(`/users/${$(this).attr("data-userId")}`, function(data){
-        let user = new User(data);
-        let userExpenses = user.expenses;
-        let arrayExpenseIds = userExpenses.map(expense => expense.id);
-        let index = arrayExpenseIds.indexOf(expenseId);
-        let nextExpenseId = arrayExpenseIds[++index];
-        let nextExpenseData = userExpenses.find(expense => expense.id === nextExpenseId)
-
-        let nextExpense = new Expense(nextExpenseData)
-
-        console.log(nextExpense)
-
+        nextExpense(data)
+      // end of get request
       })
-
-      // and then get the users expense ids.
+    // end of my next button listener
     })
-
   //end actionListener
   }
 
