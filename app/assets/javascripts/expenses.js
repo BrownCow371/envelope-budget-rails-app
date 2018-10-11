@@ -9,22 +9,44 @@ function Expense(attributes){
   this.payee = attributes.payee;
 }
 
+Expense.prototype.viewExpenseLink = function(){
+  return `<a href="/users/${this.user_id}/expenses/${this.id}">View Expense</a>`
+}
+
+Expense.prototype.editExpenseLink = function(){
+  return `<a href="/users/${this.user_id}/expenses/${this.id}/edit">Edit Expense</a>`
+}
+
+Expense.prototype.removeExpenseLink = function(){
+  return `<a data-confirm="Are you sure you want to remove this expense?" rel="nofollow" data-method="delete" href="/users/${this.user_id}/expenses/${this.id}">Remove Expense</a>`
+}
+
 Expense.prototype.renderTable = function(){
   return `<br><br><br>
           <h3> New Expense Added:</h3>
           <table id="expense_table">
-            <tbody><tr>
-              <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th>
-            </tr>
-            <tr>
-              <td>${this.exp_date}</td>
-              <td>${this.payee}</td>
-              <td>${this.exp_amount}</td>
-              <td>${this.category_id}</td>
-            </tr>
-          </tbody></table>`
+            <tbody>
+              <tr>
+                <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th><th>Expense Details</th><th>Edit Expense</th><th>Remove Expense</th>
+              </tr>
+              ${this.renderRow()}
+            </tbody>
+          </table>`
         }
 
+
+Expense.prototype.renderRow = function(){
+  return `<tr class="expense_row">
+            <td>${this.exp_date}</td>
+            <td>${this.payee}</td>
+            <td>${(this.exp_amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+            <td>${this.category_id}</td>
+            <td>${this.viewExpenseLink()}</td>
+            <td>${this.editExpenseLink()}</td>
+            <td>${this.removeExpenseLink()}</td>
+          </tr>`
+
+}
 
 // 1) need to add a serializer for expenses
 // 2) need to render User Expenses index page via JSON/JS
