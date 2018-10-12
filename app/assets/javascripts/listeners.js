@@ -28,12 +28,17 @@
 
     //get next expense category name
     nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id)
-    console.log("category", nextExpenseCat)
+    // console.log("category", nextExpenseCat)
     nextExpense.category_name = nextExpenseCat["name"]
     //render next expense on page
     let expenseRow = nextExpense.renderRow();
     $(".expense_row").replaceWith(expenseRow)
     $("#js-next-expense").attr("data-id", nextExpense.id)
+  }
+
+  let newExpenseHeader = () => {
+    return `<br><br><br>
+            <h3> New Expense Added:</h3>`
   }
 
   let attachListeners = () => {
@@ -45,10 +50,17 @@
       let params = new_form.serialize();
 
       $.post(action, params, function(json){
-        // console.log("response data", json)
+        console.log("response data", json)
         let expense = new Expense(json);
-        let expenseRow = expense.renderTable()
-        $("div#js-temporary").append(expenseRow)
+        expense.category = json["category"]
+        // let expenseTable = expense.renderTable()
+        $("div#js-temporary").empty()
+        $("div#js-temporary").append(newExpenseHeader())
+        $("div#js-temporary").append(expense.renderTable())
+
+        // reset form and reactivate submit button
+        document.getElementById("new_expense").reset()
+        $('.js-button-reset').prop('disabled', false)
       }, "json")
 
     // end submit button listener
