@@ -22,17 +22,6 @@ Expense.prototype.removeExpenseLink = function(){
   return `<a data-confirm="Are you sure you want to remove this expense?" rel="nofollow" data-method="delete" href="/users/${this.user_id}/expenses/${this.id}">Remove Expense</a>`
 }
 
-Expense.prototype.renderTable = function(){
-  return `<table id="expense_table">
-            <tbody>
-              <tr>
-                <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th><th>Expense Details</th><th>Edit Expense</th><th>Remove Expense</th>
-              </tr>
-              ${this.renderRow()}
-            </tbody>
-          </table>`
-        }
-
 
 Expense.prototype.renderRow = function(){
   return `<tr class="expense_row">
