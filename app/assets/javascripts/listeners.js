@@ -7,13 +7,30 @@
         // need to show new expense right on New expense Form?
         // or does this need to be a new expense form on a category show page?
         // or do I need to modify my expenses index page to have a means of creating a new expense that then shows up dynamically in the list?
+
+  let newExpenseHeader = () => {
+    return `<br><br><br>
+            <h3> New Expense Added:</h3>`;
+  }
+
+  let renderExpenseTable = () => {
+    return `<table id="expense_table">
+              <tbody id="js-expense-table-body">
+                <tr>
+                  <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th><th>Expense Details</th><th>Edit Expense</th><th>Remove Expense</th>
+                </tr>
+              </tbody>
+            </table>`
+          }
+
+
   let nextExpense = (data) => {
     //find all of this user's expenses
     let user = new User(data);
     let userExpenses = user.expenses;
 
     //find the current expense
-    let expenseId = parseInt($("#js-next-expense").attr("data-id"))
+    let expenseId = parseInt($("#js-next-expense").attr("data-id"));
     let arrayExpenseIds = userExpenses.map(expense => expense.id);
     let index = arrayExpenseIds.indexOf(expenseId);
 
@@ -21,24 +38,47 @@
     let nextExpenseId = arrayExpenseIds[++index];
 
     if (index === arrayExpenseIds.length) {
-      nextExpenseId = arrayExpenseIds[0]
+      nextExpenseId = arrayExpenseIds[0];
     }
     let nextExpenseData = userExpenses.find(expense => expense.id === nextExpenseId);
     let nextExpense = new Expense(nextExpenseData);
 
     //get next expense category name
-    nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id)
-    // console.log("category", nextExpenseCat)
-    nextExpense.category_name = nextExpenseCat["name"]
+    nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id);
+    console.log("category", nextExpenseCat);
+    nextExpense.category = nextExpenseCat;
     //render next expense on page
     let expenseRow = nextExpense.renderRow();
-    $(".expense_row").replaceWith(expenseRow)
-    $("#js-next-expense").attr("data-id", nextExpense.id)
+    $(".expense_row").replaceWith(expenseRow);
+    $("#js-next-expense").attr("data-id", nextExpense.id);
   }
 
-  let newExpenseHeader = () => {
-    return `<br><br><br>
-            <h3> New Expense Added:</h3>`
+  let expenseIndex = (data) =>{
+    let user = new User(data);
+    let userExpenses = user.expenses;
+
+    console.log(userExpenses);
+    userExpenses.forEach(expenseData =>{
+      let expense = new Expense(expenseData);
+      expense.category = user.categories.find(category =>category["id"] === expense.category_id);
+      $("#js-user-show-expenses").append(expense.renderRow());
+    })
+
+  }
+
+  let renderNewExpense = (json) =>{
+    // console.log("response data", json);
+    let expense = new Expense(json);
+    expense.category = json["category"];
+    // let expenseTable = expense.renderTable()
+    $("div#js-temporary").empty();
+    $("div#js-temporary").append(newExpenseHeader());
+    $("div#js-temporary").append(renderExpenseTable());
+    $("#js-expense-table-body").append(expense.renderRow());
+
+    // reset form and reactivate submit button
+    document.getElementById("new_expense").reset();
+    $('.js-button-reset').prop('disabled', false);
   }
 
   let attachListeners = () => {
@@ -50,26 +90,18 @@
       let params = new_form.serialize();
 
       $.post(action, params, function(json){
-        console.log("response data", json)
-        let expense = new Expense(json);
-        expense.category = json["category"]
-        // let expenseTable = expense.renderTable()
-        $("div#js-temporary").empty()
-        $("div#js-temporary").append(newExpenseHeader())
-        $("div#js-temporary").append(expense.renderTable())
-
-        // reset form and reactivate submit button
-        document.getElementById("new_expense").reset()
-        $('.js-button-reset').prop('disabled', false)
+        renderNewExpense(json);
       }, "json")
 
     // end submit button listener
     });
 
-    //Listener for link on user show page
+    //Listener for index of expenses link on user show page
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
-
+      $.get(`/users/${$(this).attr("data-userId")}`, function(data){
+        expenseIndex(data);
+      })
     })
 
     //Listener for next expense on expense show page
