@@ -7,7 +7,7 @@ function Expense(attributes){
   this.exp_amount = attributes.exp_amount;
   this.exp_date= attributes.exp_date;
   this.payee = attributes.payee;
-  this.category_name = attributes.category_name;
+  this.category = attributes.category;
 }
 
 Expense.prototype.viewExpenseLink = function(){
@@ -23,9 +23,7 @@ Expense.prototype.removeExpenseLink = function(){
 }
 
 Expense.prototype.renderTable = function(){
-  return `<br><br><br>
-          <h3> New Expense Added:</h3>
-          <table id="expense_table">
+  return `<table id="expense_table">
             <tbody>
               <tr>
                 <th>Date</th><th>Payee</th><th>Amount</th><th>Category</th><th>Expense Details</th><th>Edit Expense</th><th>Remove Expense</th>
@@ -41,7 +39,7 @@ Expense.prototype.renderRow = function(){
             <td>${this.exp_date}</td>
             <td>${this.payee}</td>
             <td>${(this.exp_amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
-            <td>${this.category_name}</td>
+            <td>${this.category.name}</td>
             <td>${this.viewExpenseLink()}</td>
             <td>${this.editExpenseLink()}</td>
             <td>${this.removeExpenseLink()}</td>
