@@ -14,3 +14,10 @@ Confirm
 - [x] Your commit messages are meaningful
 - [x] You made the changes in a commit that relate to the commit message
 - [x] You don't include changes in a commit that aren't related to the commit message
+
+Temporary - FMI
+- [ ] Refresh form post submit for create new expense
+- [ ] Add index of expenses to User Show page
+- [ ] Is there a better way to handle Category name
+- [ ] Brush up on Rails
+- [ ] Brush up on Closure, This, Hoisting, Scope
