@@ -15,6 +15,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require expenses
+//= require render_expenses
 //= require user
 
 //= require listeners
