@@ -45,7 +45,6 @@
 
     //get next expense category name
     nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id);
-    console.log("category", nextExpenseCat);
     nextExpense.category = nextExpenseCat;
     //render next expense on page
     let expenseRow = nextExpense.renderRow();
@@ -54,29 +53,28 @@
   }
 
   let renderExpenseIndex = (data) =>{
+    //find user expenses
     let user = new User(data);
     let userExpenses = user.expenses;
 
-    console.log(userExpenses);
+    //reset div for expenses index and render table shell and header
     $("#js-user-show-expenses").empty();
     $("#js-user-show-expenses").append(renderExpenseTable());
 
+    //Iterate through expenses, find category name, render a row in the table for each expense
     userExpenses.forEach((expenseData, index) =>{
-      console.log(expenseData);
-      console.log(index);
       let expense = new Expense(expenseData);
       expense.category = user.categories.find(category =>category["id"] === expense.category_id);
-
       $("#js-expense-table-body").append(expense.renderRow());
     })
-
   }
 
   let renderNewExpense = (json) =>{
-    // console.log("response data", json);
+    //create expense JS object
     let expense = new Expense(json);
     expense.category = json["category"];
-    // let expenseTable = expense.renderTable()
+
+    // reset DOM, add header, table and row for new expense
     $("div#js-temporary").empty();
     $("div#js-temporary").append(newExpenseHeader());
     $("div#js-temporary").append(renderExpenseTable());
@@ -98,8 +96,6 @@
       $.post(action, params, function(json){
         renderNewExpense(json);
       }, "json")
-
-    // end submit button listener
     });
 
     //Listener for index of expenses link on user show page
@@ -115,14 +111,12 @@
       data.preventDefault();
       $.get(`/users/${$(this).attr("data-userId")}`, function(data){
         renderNextExpense(data)
-      // end of get request
       })
-    // end of my next button listener
     })
   //end actionListener
   }
 
-
+// add listener to DOM when ready/loaded
   $(function(){
     attachListeners();
   })
