@@ -24,7 +24,7 @@
           }
 
 
-  let nextExpense = (data) => {
+  let renderNextExpense = (data) => {
     //find all of this user's expenses
     let user = new User(data);
     let userExpenses = user.expenses;
@@ -53,15 +53,21 @@
     $("#js-next-expense").attr("data-id", nextExpense.id);
   }
 
-  let expenseIndex = (data) =>{
+  let renderExpenseIndex = (data) =>{
     let user = new User(data);
     let userExpenses = user.expenses;
 
     console.log(userExpenses);
-    userExpenses.forEach(expenseData =>{
+    $("#js-user-show-expenses").empty();
+    $("#js-user-show-expenses").append(renderExpenseTable());
+
+    userExpenses.forEach((expenseData, index) =>{
+      console.log(expenseData);
+      console.log(index);
       let expense = new Expense(expenseData);
       expense.category = user.categories.find(category =>category["id"] === expense.category_id);
-      $("#js-user-show-expenses").append(expense.renderRow());
+
+      $("#js-expense-table-body").append(expense.renderRow());
     })
 
   }
@@ -100,7 +106,7 @@
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
       $.get(`/users/${$(this).attr("data-userId")}`, function(data){
-        expenseIndex(data);
+        renderExpenseIndex(data);
       })
     })
 
@@ -108,7 +114,7 @@
     $("#js-next-expense").on("click", function(data){
       data.preventDefault();
       $.get(`/users/${$(this).attr("data-userId")}`, function(data){
-        nextExpense(data)
+        renderNextExpense(data)
       // end of get request
       })
     // end of my next button listener
