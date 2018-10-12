@@ -4,4 +4,5 @@ function User(attributes){
   // this.username = attributes.username;
   this.name = attributes.name;
   this.expenses = attributes.expenses;
+  this.categories = attributes.categories;
 }
