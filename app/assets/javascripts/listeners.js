@@ -8,24 +8,32 @@
         // or does this need to be a new expense form on a category show page?
         // or do I need to modify my expenses index page to have a means of creating a new expense that then shows up dynamically in the list?
   let nextExpense = (data) => {
-    let expenseId = parseInt($("#js-next-expense").attr("data-id"))
+    //find all of this user's expenses
     let user = new User(data);
     let userExpenses = user.expenses;
+
+    //find the current expense
+    let expenseId = parseInt($("#js-next-expense").attr("data-id"))
     let arrayExpenseIds = userExpenses.map(expense => expense.id);
     let index = arrayExpenseIds.indexOf(expenseId);
+
+    //find the next expense
     let nextExpenseId = arrayExpenseIds[++index];
 
-    if (index === arrayExpenseIds.length-1) {
+    if (index === arrayExpenseIds.length) {
       nextExpenseId = arrayExpenseIds[0]
     }
-
     let nextExpenseData = userExpenses.find(expense => expense.id === nextExpenseId);
     let nextExpense = new Expense(nextExpenseData);
+
+    //get next expense category name
+    nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id)
+    console.log("category", nextExpenseCat)
+    nextExpense.category_name = nextExpenseCat["name"]
+    //render next expense on page
     let expenseRow = nextExpense.renderRow();
     $(".expense_row").replaceWith(expenseRow)
     $("#js-next-expense").attr("data-id", nextExpense.id)
-    console.log(expenseRow)
-    console.log(nextExpense.id)
   }
 
   let attachListeners = () => {
