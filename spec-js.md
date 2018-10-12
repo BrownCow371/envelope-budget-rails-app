@@ -18,6 +18,8 @@ Confirm
 Temporary - FMI
 - [ ] Refresh form post submit for create new expense
 - [ ] Add index of expenses to User Show page
-- [ ] Is there a better way to handle Category name
+- [x] Is there a better way to handle Category name
+- [ ] change constructor to ES6 class
+- [ ] update $.get and $.post to fetch calls
 - [ ] Brush up on Rails
 - [ ] Brush up on Closure, This, Hoisting, Scope
