@@ -13,18 +13,31 @@
     // Listener for submit button for new expense
     $("form#new_expense").on("submit", function(event){
       event.preventDefault();
-      let new_form = $(this);
-      let action = new_form.attr("action");
-      let params = new_form.serialize();
+      let action = $(this).attr("action");
 
-      $.post(action, params, function(json){
-        renderNewExpense(json);
-      }, "json")
+      // JQuery Solution
+      // let new_form = $(this);
+      // let params = new_form.serialize();
+      // $.post(action, params, function(json){
+      //   renderNewExpense(json);
+      // }, "json");
+
+    // reference: https://davidwalsh.name/fetch
+
+      let new_form = new FormData(document.getElementById('new_expense'))
+
+      fetch(action, {
+          method: "POST",
+          body: new_form
+        })
+        .then(response => response.json())
+          .then(json => renderNewExpense(json))
     });
 
     //Listener for index of expenses link on user show page
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
+      // JQuery Solution
       // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
       //   renderExpenseIndex(data);
       // })
@@ -36,6 +49,8 @@
     //Listener for next expense on expense show page
     $("#js-next-expense").on("click", function(data){
       data.preventDefault();
+      // JQuery Solution
+
       // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
       //   renderNextExpense(data)
       // })
