@@ -25,17 +25,23 @@
     //Listener for index of expenses link on user show page
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
-      $.get(`/users/${$(this).attr("data-userId")}`, function(data){
-        renderExpenseIndex(data);
-      })
+      // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
+      //   renderExpenseIndex(data);
+      // })
+      fetch(`/users/${$(this).attr("data-userId")}`)
+        .then(response => response.json())
+          .then(json => renderExpenseIndex(json))
     })
 
     //Listener for next expense on expense show page
     $("#js-next-expense").on("click", function(data){
       data.preventDefault();
-      $.get(`/users/${$(this).attr("data-userId")}`, function(data){
-        renderNextExpense(data)
-      })
+      // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
+      //   renderNextExpense(data)
+      // })
+      fetch(`/users/${$(this).attr("data-userId")}`)
+        .then(response => response.json())
+          .then(json => renderNextExpense(json))
     })
   //end actionListener
   }
