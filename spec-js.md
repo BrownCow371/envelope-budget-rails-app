@@ -19,7 +19,7 @@ Temporary - FMI
 - [x] Refresh form post submit for create new expense
 - [x] Add index of expenses to User Show page
 - [x] Is there a better way to handle Category name
-- [ ] change constructor to ES6 class
-- [ ] update $.get and $.post to fetch calls
+- [x] change constructor to ES6 class
+- [x] update $.get and $.post to fetch calls
 - [ ] Brush up on Rails
-- [ ] Brush up on Closure, This, Hoisting, Scope
+- [ ] Brush up on Closure, This, Hoisting, Scope, prototype
