@@ -1,40 +1,81 @@
 
-// Constructor Function - Expense
-function Expense(attributes){
-  this.id = attributes.id;
-  this.user_id = attributes.user_id;
-  this.category_id = attributes.category_id;
-  this.exp_amount = attributes.exp_amount;
-  this.exp_date= attributes.exp_date;
-  this.payee = attributes.payee;
-  this.category = attributes.category;
+// Epense Class
+class Expense {
+
+  constructor(attributes){
+    this.id = attributes.id;
+    this.user_id = attributes.user_id;
+    this.category_id = attributes.category_id;
+    this.exp_amount = attributes.exp_amount;
+    this.exp_date= attributes.exp_date;
+    this.payee = attributes.payee;
+    this.category = attributes.category;
+  }
+
+  viewExpenseLink(){
+    return `<a href="/users/${this.user_id}/expenses/${this.id}">View Expense</a>`
+  }
+
+  editExpenseLink(){
+    return `<a href="/users/${this.user_id}/expenses/${this.id}/edit">Edit Expense</a>`
+  }
+
+  removeExpenseLink(){
+    return `<a data-confirm="Are you sure you want to remove this expense?" rel="nofollow" data-method="delete" href="/users/${this.user_id}/expenses/${this.id}">Remove Expense</a>`
+  }
+
+
+  renderExpenseRow(){
+    return `<tr class="expense_row">
+              <td>${this.exp_date}</td>
+              <td>${this.payee}</td>
+              <td>${(this.exp_amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+              <td>${this.category.name}</td>
+              <td>${this.viewExpenseLink()}</td>
+              <td>${this.editExpenseLink()}</td>
+              <td>${this.removeExpenseLink()}</td>
+            </tr>`
+
+  }
+  // end of class
 }
 
-Expense.prototype.viewExpenseLink = function(){
-  return `<a href="/users/${this.user_id}/expenses/${this.id}">View Expense</a>`
-}
-
-Expense.prototype.editExpenseLink = function(){
-  return `<a href="/users/${this.user_id}/expenses/${this.id}/edit">Edit Expense</a>`
-}
-
-Expense.prototype.removeExpenseLink = function(){
-  return `<a data-confirm="Are you sure you want to remove this expense?" rel="nofollow" data-method="delete" href="/users/${this.user_id}/expenses/${this.id}">Remove Expense</a>`
-}
-
-
-Expense.prototype.renderRow = function(){
-  return `<tr class="expense_row">
-            <td>${this.exp_date}</td>
-            <td>${this.payee}</td>
-            <td>${(this.exp_amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
-            <td>${this.category.name}</td>
-            <td>${this.viewExpenseLink()}</td>
-            <td>${this.editExpenseLink()}</td>
-            <td>${this.removeExpenseLink()}</td>
-          </tr>`
-
-}
+//Constructor version
+// function Expense(attributes){
+//   this.id = attributes.id;
+//   this.user_id = attributes.user_id;
+//   this.category_id = attributes.category_id;
+//   this.exp_amount = attributes.exp_amount;
+//   this.exp_date= attributes.exp_date;
+//   this.payee = attributes.payee;
+//   this.category = attributes.category;
+// }
+//
+// Expense.prototype.viewExpenseLink = function(){
+//   return `<a href="/users/${this.user_id}/expenses/${this.id}">View Expense</a>`
+// }
+//
+// Expense.prototype.editExpenseLink = function(){
+//   return `<a href="/users/${this.user_id}/expenses/${this.id}/edit">Edit Expense</a>`
+// }
+//
+// Expense.prototype.removeExpenseLink = function(){
+//   return `<a data-confirm="Are you sure you want to remove this expense?" rel="nofollow" data-method="delete" href="/users/${this.user_id}/expenses/${this.id}">Remove Expense</a>`
+// }
+//
+//
+// Expense.prototype.renderRow = function(){
+//   return `<tr class="expense_row">
+//             <td>${this.exp_date}</td>
+//             <td>${this.payee}</td>
+//             <td>${(this.exp_amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+//             <td>${this.category.name}</td>
+//             <td>${this.viewExpenseLink()}</td>
+//             <td>${this.editExpenseLink()}</td>
+//             <td>${this.removeExpenseLink()}</td>
+//           </tr>`
+//
+// }
 
 // 1) need to add a serializer for expenses
 // 2) need to render User Expenses index page via JSON/JS
