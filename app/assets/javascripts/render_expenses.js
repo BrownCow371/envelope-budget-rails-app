@@ -37,7 +37,7 @@ let renderNextExpense = (data) => {
   nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id);
   nextExpense.category = nextExpenseCat;
   //render next expense on page
-  let expenseRow = nextExpense.renderRow();
+  let expenseRow = nextExpense.renderExpenseRow();
   $(".expense_row").replaceWith(expenseRow);
   $("#js-next-expense").attr("data-id", nextExpense.id);
 }
@@ -55,7 +55,7 @@ let renderExpenseIndex = (data) =>{
   userExpenses.forEach((expenseData, index) =>{
     let expense = new Expense(expenseData);
     expense.category = user.categories.find(category =>category["id"] === expense.category_id);
-    $("#js-expense-table-body").append(expense.renderRow());
+    $("#js-expense-table-body").append(expense.renderExpenseRow());
   })
 }
 
@@ -68,7 +68,7 @@ let renderNewExpense = (json) =>{
   $("div#js-temporary").empty();
   $("div#js-temporary").append(newExpenseHeader());
   $("div#js-temporary").append(renderExpenseTable());
-  $("#js-expense-table-body").append(expense.renderRow());
+  $("#js-expense-table-body").append(expense.renderExpenseRow());
 
   // reset form and reactivate submit button
   document.getElementById("new_expense").reset();
