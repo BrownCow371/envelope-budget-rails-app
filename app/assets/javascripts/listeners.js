@@ -1,34 +1,10 @@
-//what do I need listeners for?
-    // need a link on user show page for expenses - add dynamically to user show page
-    // Need to create a "Next" link or button for expenses show page and hijack that
-    // not sure about has-many relationship - might need to add Categories Index page with a link to show expenses per category
-        // per Alice: as long as you are rendering the expenses by getting it through the User model JSON then yes, you can have one user and their associated expenses.
-    // hijack on submit for new expense form?
-        // need to show new expense right on New expense Form?
-        // or does this need to be a new expense form on a category show page?
-        // or do I need to modify my expenses index page to have a means of creating a new expense that then shows up dynamically in the list?
-
-
   let attachListeners = () => {
-    // listener to sort expenses on user show page
-    // $("#js-sort-expenses").on("click",function(event){
-    //   fetch(`/users/${$(this).attr("data-userId")}.json`)
-    //     .then(response => response.json())
-    //       .then(json => {
-    //         //sorts in place
-    //         json["expenses"].sort((a, b) => a.exp_date > b.exp_date)
-    //         renderExpenseIndex(json)
-    //       })
-    // })
-
-
-
     // Listener for submit button for new expense
     $("form#new_expense").on("submit", function(event){
       event.preventDefault();
       let action = $(this).attr("action");
 
-      // JQuery Solution
+    // JQuery Solution
       // let new_form = $(this);
       // let params = new_form.serialize();
       // $.post(action, params, function(json){
@@ -41,33 +17,53 @@
 
       fetch(action, {
           method: "POST",
-          body: new_form
+          body: new_form,
+          headers: new Headers({
+        		'Accept': 'application/json'
+        	})
         })
         .then(response => response.json())
           .then(json => renderNewExpense(json))
     });
 
-    //Listener for index of expenses link on user show page
+    //Listener for index of sorted expenses link on user show page
     $("#js-list-expenses").on("click", function(event){
       event.preventDefault();
-      // JQuery Solution
+
+    // JQuery Solution
       // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
       //   renderExpenseIndex(data);
       // })
-      fetch(`/users/${$(this).attr("data-userId")}.json`)
+
+      fetch(`/users/${$(this).attr("data-userId")}`, {
+        headers:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
         .then(response => response.json())
-          .then(json => renderExpenseIndex(json))
+          .then(json => {
+            //sorts in place
+            json["expenses"].sort((a, b) => a.exp_date > b.exp_date)
+            renderExpenseIndex(json)
+          })
     })
 
     //Listener for next expense on expense show page
     $("#js-next-expense").on("click", function(data){
       data.preventDefault();
-      // JQuery Solution
 
+    // JQuery Solution
       // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
       //   renderNextExpense(data)
       // })
-      fetch(`/users/${$(this).attr("data-userId")}`)
+
+      fetch(`/users/${$(this).attr("data-userId")}`, {
+          headers:{
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+      })
         .then(response => response.json())
           .then(json => renderNextExpense(json))
     })
