@@ -34,7 +34,7 @@ let renderNextExpense = (data) => {
   let nextExpense = new Expense(nextExpenseData);
 
   //get next expense category name
-  nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.category_id);
+  nextExpenseCat = user.categories.find(category => category["id"] === nextExpense.categoryId);
   nextExpense.category = nextExpenseCat;
   //render next expense on page
   let expenseRow = nextExpense.renderExpenseRow();
@@ -54,7 +54,7 @@ let renderExpenseIndex = (data) =>{
   //Iterate through expenses, find category name, render a row in the table for each expense
   userExpenses.forEach((expenseData, index) =>{
     let expense = new Expense(expenseData);
-    expense.category = user.categories.find(category =>category["id"] === expense.category_id);
+    expense.category = user.categories.find(category =>category["id"] === expense.categoryId);
     $("#js-expense-table-body").append(expense.renderExpenseRow());
   })
 }
