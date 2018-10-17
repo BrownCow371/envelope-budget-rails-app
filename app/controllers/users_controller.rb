@@ -18,8 +18,8 @@ class UsersController < ApplicationController
 
   def show
     respond_to do |f|
-      f.json {render :json => @user}
       f.html {render 'show'}
+      f.json {render :json => @user}
     end
     if @user.nil?
       respond_to do |f|
