@@ -10,6 +10,19 @@
 
 
   let attachListeners = () => {
+    // listener to sort expenses on user show page
+    // $("#js-sort-expenses").on("click",function(event){
+    //   fetch(`/users/${$(this).attr("data-userId")}.json`)
+    //     .then(response => response.json())
+    //       .then(json => {
+    //         //sorts in place
+    //         json["expenses"].sort((a, b) => a.exp_date > b.exp_date)
+    //         renderExpenseIndex(json)
+    //       })
+    // })
+
+
+
     // Listener for submit button for new expense
     $("form#new_expense").on("submit", function(event){
       event.preventDefault();
@@ -41,7 +54,7 @@
       // $.get(`/users/${$(this).attr("data-userId")}`, function(data){
       //   renderExpenseIndex(data);
       // })
-      fetch(`/users/${$(this).attr("data-userId")}`)
+      fetch(`/users/${$(this).attr("data-userId")}.json`)
         .then(response => response.json())
           .then(json => renderExpenseIndex(json))
     })

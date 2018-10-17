@@ -21,7 +21,7 @@ module ExpensesHelper
               expense.category.name,
               (link_to "View Expense", user_expense_path(user, expense)),
               (link_to "Edit Expense", edit_user_expense_path(user, expense)),
-              (link_to "Remove Expense", user_expense_path(user, expense), method: :delete, data: { confirm: "Are you sure you want to remove this expense?" })
+              (link_to "Remove Expense", user_expense_path(user, expense), method: :delete, data: {confirm: "Are you sure you want to remove this expense?" })
             ]
     row.collect { |table_field| content_tag(:td, table_field) }.join().html_safe
   end
