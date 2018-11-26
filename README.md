@@ -2,7 +2,7 @@
 
 This application allows the user to create and store a their daily expenses by category. Users can modify expenses, as well as add new expenses to their account. Users can login using a Facebook account if they wish.
 
-##Demo Link
+## Demo Link
 A demo video of the application can be found [here](https://youtu.be/ZVByr2csjfY).
 
 ## Installation
