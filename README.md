@@ -2,6 +2,9 @@
 
 This application allows the user to create and store a their daily expenses by category. Users can modify expenses, as well as add new expenses to their account. Users can login using a Facebook account if they wish.
 
+##Demo Link
+A demo video of the application can be found [here](https://youtu.be/ZVByr2csjfY).
+
 ## Installation
 
 Clone down this repository. Then run "bundle" to install all the required gem files. Then you need to run "rake db migrate" and "rake db seed" to get the database set up. Once you have done that you can run "thin start --ssl" from your terminal to get the app running on your local host. 
